@@ -2,6 +2,17 @@
 
 A complete machine learning system for analyzing customer sentiment in Amazon product reviews.
 
+## Dataset  
+
+This project is powered by a publicly available dataset hosted on Kaggle.  
+The dataset contains real-world user reviews along with their ratings, which we used to train and evaluate our sentiment analysis model.  
+
+You can explore and download the dataset directly from Kaggle using the link below:  
+[Dataset Link](https://www.kaggle.com/datasets/arhamrumi/amazon-product-reviews)  
+
+> Note: Please make sure you have a Kaggle account to access the dataset.  
+Depending on the dataset’s license, you may also need to agree to its terms of use before downloading.
+
 ## Model Overview
 
 - **Model Type**: Logistic Regression
