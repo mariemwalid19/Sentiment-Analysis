@@ -1,0 +1,102 @@
+"""
+Quick test script to verify the model package works correctly
+"""
+import os
+import sys
+
+def test_model_package():
+    """Test all components of the saved model"""
+    
+    print("Testing Sentiment Analysis Model Package...")
+    print("=" * 50)
+    
+    # Test 1: Check if all files exist
+    required_files = [
+        'best_model.pkl',
+        'vectorizer.pkl', 
+        'predict_sentiment.py',
+        'text_preprocessing.py',
+        'model_info.json',
+        'label_mapping.json',
+        'requirements.txt'
+    ]
+    
+    print("Checking required files...")
+    missing_files = []
+    for file in required_files:
+        if os.path.exists(file):
+            print(f"{file}")
+        else:
+            print(f"{file} - MISSING")
+            missing_files.append(file)
+    
+    if missing_files:
+        print(f"\nMissing files: {missing_files}")
+        return False
+    
+    # Test 2: Try importing the analyzer
+    print("\nTesting imports...")
+    try:
+        from predict_sentiment import SentimentAnalyzer
+        print("SentimentAnalyzer import successful")
+    except Exception as e:
+        print(f"Import failed: {e}")
+        return False
+    
+    # Test 3: Initialize and test the analyzer
+    print("\nTesting model initialization...")
+    try:
+        analyzer = SentimentAnalyzer()
+        print("Model initialized successfully")
+    except Exception as e:
+        print(f"Initialization failed: {e}")
+        return False
+    
+    # Test 4: Test predictions
+    print("\nTesting predictions...")
+    test_cases = [
+        ("Amazing product!", "Positive"),
+        ("Terrible quality", "Negative"), 
+        ("It's okay", "Neutral")
+    ]
+    
+    all_passed = True
+    for text, expected in test_cases:
+        try:
+            result = analyzer.predict_single(text)
+            if 'error' in result:
+                print(f"{text} -> Error: {result['error']}")
+                all_passed = False
+            else:
+                predicted = result['predicted_sentiment']
+                confidence = result['confidence']
+                status = "True" if predicted == expected else "False"
+                print(f"{status} '{text}' -> {predicted} ({confidence:.3f})")
+                
+        except Exception as e:
+            print(f"{text} -> Exception: {e}")
+            all_passed = False
+    
+    # Test 5: Model info
+    print("\nModel Information:")
+    try:
+        info = analyzer.get_model_info()
+        print(f"Model Type: {info['model_info']['model_type']}")
+        print(f"Accuracy: {info['model_info']['accuracy']:.4f}")
+        print(f"Classes: {info['model_info']['classes']}")
+    except Exception as e:
+        print(f"Info retrieval failed: {e}")
+        all_passed = False
+    
+    # Final result
+    print("\n" + "=" * 50)
+    if all_passed:
+        print("ALL TESTS PASSED! Model package is ready for use.")
+        return True
+    else:
+        print("SOME TESTS FAILED! Please check the errors above.")
+        return False
+
+if __name__ == "__main__":
+    success = test_model_package()
+    sys.exit(0 if success else 1)
