@@ -1,14 +1,9 @@
-"""
-Quick test script to verify the model package works correctly
-"""
 import os
 import sys
 
 def test_model_package():
-    """Test all components of the saved model"""
     
     print("Testing Sentiment Analysis Model Package...")
-    print("=" * 50)
     
     required_files = [
         'best_model.pkl',
@@ -83,7 +78,6 @@ def test_model_package():
         print(f"Info retrieval failed: {e}")
         all_passed = False
     
-    print("\n" + "=" * 50)
     if all_passed:
         print("ALL TESTS PASSED! Model package is ready for use.")
         return True
